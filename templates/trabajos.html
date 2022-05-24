@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&display=swap" rel="stylesheet">
+   
+    <link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/trabajos.css') }}"
+    />
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    <title>Trabajos</title>
+  </head>
+  <body>
+   <nav class="navegador">
+      <img
+      src="{{ url_for('static', filename='images/La femme logos.png') }}"
+      alt="Cortes"/>
+      <a href="{{url_for('login')}}">Sign out</a>
+    </nav>
+    <nav class="titulo">
+      <h1>Panel de Imágenes</h1>
+    </nav>
+    <section class="Contenedortrabajos">
+      <table>
+        <!--Encabezado de la tabla-->
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Precio</th>
+            <th>Categoría</th>
+            <th>Imagen</th>
+            <th>Editar</th>
+            <th>Eliminar</th>
+          </tr>
+        </thead>
+       <!--Cuerpo de la tabla-->
+        <tbody>
+          {% for trabajo in trabajos %}
+          <tr>
+            <td class="C_titulo">{{trabajo[1]}}</td>
+            <td class="C_titulo">{{trabajo[2]}}</td>
+            <td class="C_titulo">{{trabajo[3]}}</td>
+            <td class="C_titulo">{{trabajo[5]}}</td>
+            <td>
+            <a target="_blank" href="{{trabajo[4]}}">
+             <img src="{{trabajo[4]}}" alt="" height="30px" width="30px" /> 
+            </a>
+            </td>
+            <td>
+              <a href="{{url_for('editar_trabajo', id=trabajo[0])}}"><button class="Btn_editar">editar</button></a>
+            </td>
+            <td>
+              <form action="{{url_for('eliminar_trabajo')}}" method="POST">
+                <input type="hidden" name="id" value="{{trabajo[0]}}" />
+                <button class="Btn_eliminar">eliminar</button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </section>
+    <div class="btn_agregar">
+    <a href="{{url_for('formulario_agregar_trabajo')}}"><button>Añadir trabajo</button></a>
+    </div>
+  </body>
+</html>
